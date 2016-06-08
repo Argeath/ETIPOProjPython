@@ -31,25 +31,24 @@ class Human(Animal):
 
     def doSpell(self):
         if self.toNextSpell > 5:
-            for y in range(-1, 1):
-                for x in range(-1, 1):
-                    if y == 0 and x == 0:
+            for y in range(0, 3):
+                for x in range(0, 3):
+                    if y == 1 and x == 1:
                         continue
 
-                    newPos = self.position + np.array([x, y])
+                    newPos = self.position + np.array([x-1, y-1])
                     if 0 <= newPos[0] < self.world.size[0] and 0 <= newPos[1] < self.world.size[1]:
                         organism = self.world.getOrganismOnPos(newPos)
                         if organism is not None:
                             organism.dieing = True
                             self.world.addToLogs("You burner " + organism.type.name + ".")
 
-
         if self.toNextSpell > 0:
             self.toNextSpell -= 1
 
     def castSpell(self):
         if self.toNextSpell > 0:
-            self.world.addToLogs("To next spell " + self.toNextSpell + " rounds.")
+            self.world.addToLogs("To next spell " + str(self.toNextSpell) + " rounds.")
             return
 
         self.toNextSpell = 10
